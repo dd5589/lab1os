@@ -79,8 +79,10 @@ pacman -S --needed mingw-w64-ucrt-x86_64-gcc
 
 ### 2. Переход в папку проекта
 
+Создай папку и перейди в неё в терминале
+
 ```bash
-cd /c/mtcd/Monitor
+cd /c/Monitor-papka
 ```
 
 ### 3. Компиляция
