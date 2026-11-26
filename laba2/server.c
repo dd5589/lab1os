@@ -1,4 +1,3 @@
-
 #define _POSIX_C_SOURCE 200809L
 
 #include <stdio.h>
@@ -168,23 +167,25 @@ int main(void)
             int new_fd = accept(server_fd, NULL, NULL);
 
             if (new_fd == -1) {
-                if (errno == EINTR)
-                perror("accept");
-                goto cleanup;
-            }
-
-            printf("New connection\n");
-
-            if (client_fd == -1 && new_fd < FD_SETSIZE) {
-                client_fd = new_fd;
-                printf("Client accepted\n");
+                if (errno != EINTR) {
+                    perror("accept");
+                    goto cleanup;
+                }
             }
             else {
-                printf("Extra connection closed\n");
-                close(new_fd);
-            }
+                printf("New connection\n");
 
-            fflush(stdout);
+                if (client_fd == -1 && new_fd < FD_SETSIZE) {
+                    client_fd = new_fd;
+                    printf("Client accepted\n");
+                }
+                else {
+                    printf("Extra connection closed\n");
+                    close(new_fd);
+                }
+
+                fflush(stdout);
+            }
         }
 
         if (watched_client != -1 &&
