@@ -169,8 +169,6 @@ int main(void)
 
             if (new_fd == -1) {
                 if (errno == EINTR)
-                    continue;
-
                 perror("accept");
                 goto cleanup;
             }
